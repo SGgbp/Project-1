@@ -38,9 +38,10 @@ class Business(Base):
     google_place_id       = Column(String(100))
     setup_complete        = Column(Boolean, default=False)
     setup_step            = Column(Integer, default=0)
-    active                = Column(Boolean, default=True)
-    paused                = Column(Boolean, default=False)
-    last_owner_message    = Column(DateTime(timezone=True))
+    active                    = Column(Boolean, default=True)
+    paused                    = Column(Boolean, default=False)
+    consecutive_quiet_weeks   = Column(Integer, default=0)
+    last_owner_message        = Column(DateTime(timezone=True))
     created_at            = Column(DateTime(timezone=True), server_default=func.now())
     updated_at            = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
@@ -193,6 +194,16 @@ class Referral(Base):
     created_at           = Column(DateTime(timezone=True), server_default=func.now())
 
     referrer_business = relationship("Business", back_populates="referrals")
+
+
+class ReviewQueue(Base):
+    __tablename__ = "review_queue"
+
+    id           = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    booking_id   = Column(UUID(as_uuid=True), ForeignKey("bookings.id", ondelete="CASCADE"))
+    scheduled_at = Column(DateTime(timezone=True), nullable=False)
+    sent         = Column(Boolean, default=False)
+    created_at   = Column(DateTime(timezone=True), server_default=func.now())
 
 
 class Partner(Base):

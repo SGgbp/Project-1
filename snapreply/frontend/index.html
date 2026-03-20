@@ -13,16 +13,19 @@
 <header class="hero">
   <nav class="nav">
     <div class="nav-logo">📱 SnapReply</div>
-    <a href="#pricing" class="nav-cta">See pricing</a>
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <a href="/login" class="nav-cta" style="background:rgba(255,255,255,0.08);">Sign in</a>
+      <a href="#pricing" class="nav-cta">See pricing</a>
+    </div>
   </nav>
   <div class="hero-content">
     <div class="hero-badge">🇬🇧 Built for UK micro-businesses</div>
     <h1>Never lose a customer<br>to a missed call again.</h1>
     <p class="hero-sub">Your AI assistant replies to every WhatsApp enquiry within <strong>60 seconds</strong> — books appointments, answers questions, and sends you a daily summary. All via WhatsApp. No app. No laptop. No faff.</p>
     <div class="hero-ctas">
-      <a href="/api/auth/register?plan=starter" class="btn btn-secondary">Start free — Starter</a>
-      <a href="/api/auth/register?plan=growth" class="btn btn-primary">Start free — Growth ⭐</a>
-      <a href="/api/auth/register?plan=pro" class="btn btn-ghost">Start free — Pro</a>
+      <a href="/signup?plan=starter" class="btn btn-secondary">Start free — Starter</a>
+      <a href="/signup?plan=growth" class="btn btn-primary">Start free — Growth ⭐</a>
+      <a href="/signup?plan=pro" class="btn btn-ghost">Start free — Pro</a>
     </div>
     <p class="hero-trust">✅ 7-day free trial &nbsp;·&nbsp; No credit card required &nbsp;·&nbsp; Cancel anytime via WhatsApp</p>
   </div>
@@ -90,7 +93,7 @@
           <li>❌ No-show reminders</li>
           <li>❌ Monday ROI report</li>
         </ul>
-        <a id="cta-starter" href="/api/auth/register?plan=starter" class="btn btn-outline btn-full">Start free trial</a>
+        <a id="cta-starter" href="/signup?plan=starter" class="btn btn-outline btn-full">Start free trial</a>
       </div>
 
       <!-- Growth (recommended) -->
@@ -113,7 +116,7 @@
           <li>❌ Review request automation</li>
           <li>❌ Custom AI persona name</li>
         </ul>
-        <a id="cta-growth" href="/api/auth/register?plan=growth" class="btn btn-primary btn-full">Start free trial</a>
+        <a id="cta-growth" href="/signup?plan=growth" class="btn btn-primary btn-full">Start free trial</a>
       </div>
 
       <!-- Pro -->
@@ -132,7 +135,7 @@
           <li>✅ Monthly strategy call</li>
           <li>✅ 7-day free trial</li>
         </ul>
-        <a id="cta-pro" href="/api/auth/register?plan=pro" class="btn btn-outline btn-full">Start free trial</a>
+        <a id="cta-pro" href="/signup?plan=pro" class="btn btn-outline btn-full">Start free trial</a>
       </div>
     </div>
     <p class="pricing-note">💡 <strong>Annual plans save you 2 months.</strong> Lock in 12 months of growth and slash churn risk to zero.</p>
@@ -223,9 +226,9 @@
     <h2>Start catching every enquiry today.</h2>
     <p>7-day free trial. No credit card needed. Cancel via WhatsApp.</p>
     <div class="hero-ctas">
-      <a href="/api/auth/register?plan=starter" class="btn btn-secondary">Starter — £39/mo</a>
-      <a href="/api/auth/register?plan=growth" class="btn btn-primary">Growth — £69/mo ⭐</a>
-      <a href="/api/auth/register?plan=pro" class="btn btn-ghost">Pro — £119/mo</a>
+      <a href="/signup?plan=starter" class="btn btn-secondary">Starter — £39/mo</a>
+      <a href="/signup?plan=growth" class="btn btn-primary">Growth — £69/mo ⭐</a>
+      <a href="/signup?plan=pro" class="btn btn-ghost">Pro — £119/mo</a>
     </div>
   </div>
 </section>
@@ -252,9 +255,9 @@ function setBilling(mode) {
   document.getElementById('toggle-monthly').classList.toggle('active', !isAnnual);
   document.getElementById('toggle-annual').classList.toggle('active', isAnnual);
   const suffix = isAnnual ? '&annual=true' : '';
-  document.getElementById('cta-starter').href = `/api/auth/register?plan=starter${suffix}`;
-  document.getElementById('cta-growth').href = `/api/auth/register?plan=growth${suffix}`;
-  document.getElementById('cta-pro').href = `/api/auth/register?plan=pro${suffix}`;
+  document.getElementById('cta-starter').href = `/signup?plan=starter${suffix}`;
+  document.getElementById('cta-growth').href = `/signup?plan=growth${suffix}`;
+  document.getElementById('cta-pro').href = `/signup?plan=pro${suffix}`;
 }
 </script>
 

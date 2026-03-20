@@ -17,3 +17,4 @@ slowapi==0.1.9
 google-auth==2.29.0
 google-auth-oauthlib==1.2.0
 google-api-python-client==2.126.0
+alembic==1.13.1

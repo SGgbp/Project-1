@@ -26,8 +26,6 @@ PLAN_MONTHLY_PRICE = {
     "pro": 119,
 }
 
-# Track consecutive quiet weeks per business: {business_id: int}
-_quiet_weeks: dict[str, int] = {}
 
 
 async def send_all_monday_reports() -> None:
@@ -81,16 +79,15 @@ async def _send_monday_report(business, db) -> None:
     )
     total_bookings = bookings_result.scalar() or 0
 
-    business_id_str = str(business.id)
-
-    # Track consecutive quiet weeks
+    # Track consecutive quiet weeks in DB
     if total_bookings == 0:
-        _quiet_weeks[business_id_str] = _quiet_weeks.get(business_id_str, 0) + 1
+        business.consecutive_quiet_weeks = (business.consecutive_quiet_weeks or 0) + 1
     else:
-        _quiet_weeks[business_id_str] = 0
+        business.consecutive_quiet_weeks = 0
+    await db.commit()
 
     # Two or more consecutive quiet weeks — send proactive help message
-    if _quiet_weeks.get(business_id_str, 0) >= 2:
+    if (business.consecutive_quiet_weeks or 0) >= 2:
         await send_whatsapp_message(
             business.owner_whatsapp,
             f"Hey {business.first_name}, quiet week — are you getting many calls? 📞\n\n"

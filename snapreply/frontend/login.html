@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — SnapReply</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+    .auth-page { min-height: 100vh; background: var(--off-white); display: flex; flex-direction: column; }
+    .auth-header { background: linear-gradient(135deg, var(--navy), #0F3460); padding: 1.25rem 1.5rem; }
+    .auth-header a { color: var(--white); font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    .auth-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .auth-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.5rem; width: 100%; max-width: 420px; }
+    .auth-card h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .auth-card .subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.375rem; }
+    input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s; }
+    input:focus { outline: none; border-color: var(--green); }
+    .submit-btn { width: 100%; padding: 1rem; background: var(--green); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .submit-btn:hover { background: var(--green-dark); }
+    .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted); }
+    .auth-switch a { color: var(--green-dark); font-weight: 600; }
+    .error-box { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 0.875rem 1rem; color: #DC2626; font-size: 0.875rem; margin-bottom: 1.25rem; display: none; }
+  </style>
+</head>
+<body class="auth-page">
+
+<header class="auth-header">
+  <a href="/">📱 SnapReply</a>
+</header>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to your SnapReply dashboard.</p>
+
+    <div class="error-box" id="error-box"></div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="jane@example.com" required autofocus />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Your password" required />
+      </div>
+      <button type="submit" class="submit-btn" id="submit-btn">Sign in →</button>
+    </form>
+
+    <div class="auth-switch">
+      Don't have an account? <a href="/signup">Start free trial</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Redirect if already logged in
+  if (localStorage.getItem('snapreply_token')) {
+    window.location.href = '/dashboard';
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const errBox = document.getElementById('error-box');
+    errBox.style.display = 'none';
+
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value,
+        }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        errBox.textContent = data.detail || 'Invalid email or password.';
+        errBox.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Sign in →';
+        return;
+      }
+
+      localStorage.setItem('snapreply_token', data.access_token);
+      window.location.href = '/dashboard';
+    } catch (err) {
+      errBox.textContent = 'Network error. Please try again.';
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Sign in →';
+    }
+  });
+</script>
+
+</body>
+</html>

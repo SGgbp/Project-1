@@ -60,7 +60,6 @@ async def _process_trial(sub, db) -> None:
         sub.sent_notifications = sent
         await db.commit()
 
-    billing_url = f"from config import settings; {settings.BASE_URL}/billing"
     from config import settings as cfg
 
     if days_left == 2:

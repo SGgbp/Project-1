@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     WHATSAPP_PHONE_NUMBER_ID: str = "your_phone_number_id"
     WHATSAPP_ACCESS_TOKEN: str = "your_permanent_access_token"
     WHATSAPP_VERIFY_TOKEN: str = "snapreply_verify_token"
+    WHATSAPP_APP_SECRET: str = "your_whatsapp_app_secret"
     WHATSAPP_BUSINESS_NUMBER: str = "+447700000000"
 
     # ─── Twilio (SMS fallback + missed call detection) ───────────────────────

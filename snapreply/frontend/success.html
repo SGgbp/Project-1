@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to SnapReply!</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+    body { background: var(--off-white); display: flex; flex-direction: column; min-height: 100vh; }
+    .success-page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .success-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.5rem; max-width: 560px; width: 100%; text-align: center; }
+    .tick { font-size: 4rem; margin-bottom: 1rem; }
+    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .sub { color: var(--text-muted); margin-bottom: 2rem; }
+    .steps-list { text-align: left; margin: 0 auto 2rem; max-width: 380px; }
+    .step-item { display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start; }
+    .step-num { background: var(--green); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; margin-top: 0.15rem; }
+    .step-text strong { display: block; font-size: 0.95rem; margin-bottom: 0.15rem; }
+    .step-text p { color: var(--text-muted); font-size: 0.85rem; }
+    .cta-btns { display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-lg { display: block; padding: 1rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-align: center; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+    .btn-green { background: var(--green); color: white; }
+    .btn-green:hover { background: var(--green-dark); text-decoration: none; }
+    .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text-muted); }
+    .btn-outline:hover { border-color: var(--green); color: var(--green-dark); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="success-page">
+  <div class="success-card">
+    <div class="tick">🎉</div>
+    <h1>You're all set!</h1>
+    <p class="sub">Your SnapReply trial has started. Here's what to do next:</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Save your SnapReply number</strong>
+          <p>We'll WhatsApp you your dedicated number within 5 minutes. Save it in your phone contacts.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Complete WhatsApp setup</strong>
+          <p>Text <code>HELLO</code> to your number. Your AI will walk you through a 5-message setup — business name, services, greeting.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Share your number with customers</strong>
+          <p>Put it on your website, Instagram bio, Google Business profile, and business card. Every enquiry gets a 60-second reply.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-btns">
+      <a href="/dashboard" class="btn-lg btn-green">Go to dashboard →</a>
+      <a href="/" class="btn-lg btn-outline">Back to homepage</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
