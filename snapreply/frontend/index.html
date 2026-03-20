@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapReply — Never lose a customer to a missed call again</title>
+  <meta name="description" content="AI-powered WhatsApp assistant for UK micro-businesses. Replies to every missed enquiry in 60 seconds. No app, no laptop — runs entirely on WhatsApp.">
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────────────── -->
+<header class="hero">
+  <nav class="nav">
+    <div class="nav-logo">📱 SnapReply</div>
+    <a href="#pricing" class="nav-cta">See pricing</a>
+  </nav>
+  <div class="hero-content">
+    <div class="hero-badge">🇬🇧 Built for UK micro-businesses</div>
+    <h1>Never lose a customer<br>to a missed call again.</h1>
+    <p class="hero-sub">Your AI assistant replies to every WhatsApp enquiry within <strong>60 seconds</strong> — books appointments, answers questions, and sends you a daily summary. All via WhatsApp. No app. No laptop. No faff.</p>
+    <div class="hero-ctas">
+      <a href="/api/auth/register?plan=starter" class="btn btn-secondary">Start free — Starter</a>
+      <a href="/api/auth/register?plan=growth" class="btn btn-primary">Start free — Growth ⭐</a>
+      <a href="/api/auth/register?plan=pro" class="btn btn-ghost">Start free — Pro</a>
+    </div>
+    <p class="hero-trust">✅ 7-day free trial &nbsp;·&nbsp; No credit card required &nbsp;·&nbsp; Cancel anytime via WhatsApp</p>
+  </div>
+</header>
+
+<!-- ─── SOCIAL PROOF BAR ──────────────────────────────────────────────────── -->
+<section class="proof-bar">
+  <p>⚡ Average reply time: <strong>42 seconds</strong> &nbsp;·&nbsp; 🇬🇧 <strong>5 million</strong> UK micro-businesses &nbsp;·&nbsp; 📅 Bookings while you sleep</p>
+</section>
+
+<!-- ─── HOW IT WORKS ──────────────────────────────────────────────────────── -->
+<section class="how-it-works" id="how">
+  <div class="container">
+    <h2>How it works</h2>
+    <p class="section-sub">Three steps. Under 5 minutes. Entirely on WhatsApp.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Sign up &amp; get your number</h3>
+        <p>Choose your plan, get a dedicated SnapReply WhatsApp number. Takes 2 minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Set up via WhatsApp</h3>
+        <p>Text your new number. Your AI walks you through setup in 5 messages — no laptop needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Never miss a lead again</h3>
+        <p>Every enquiry gets a warm, professional reply within 60 seconds. Bookings land in your inbox.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ───────────────────────────────────────────────────────────── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <h2>Simple, transparent pricing</h2>
+    <p class="section-sub">All plans include a 7-day free trial. Cancel via WhatsApp anytime.</p>
+
+    <div class="billing-toggle">
+      <span id="toggle-monthly" class="toggle-opt active" onclick="setBilling('monthly')">Monthly</span>
+      <span id="toggle-annual" class="toggle-opt" onclick="setBilling('annual')">Annual <em class="save-badge">Save 2 months</em></span>
+    </div>
+
+    <div class="plans">
+
+      <!-- Starter -->
+      <div class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">
+          <span class="price-monthly">£39<span class="per">/mo</span></span>
+          <span class="price-annual" style="display:none">£32<span class="per">/mo</span></span>
+        </div>
+        <p class="plan-desc">Perfect for getting started. 50 AI conversations per month.</p>
+        <ul class="features">
+          <li>✅ WhatsApp AI replies (50/mo)</li>
+          <li>✅ Booking capture</li>
+          <li>✅ Daily 7pm summary</li>
+          <li>✅ Owner commands (PAUSE, STATS…)</li>
+          <li>✅ 7-day free trial</li>
+          <li>❌ SMS fallback</li>
+          <li>❌ Google Calendar sync</li>
+          <li>❌ No-show reminders</li>
+          <li>❌ Monday ROI report</li>
+        </ul>
+        <a id="cta-starter" href="/api/auth/register?plan=starter" class="btn btn-outline btn-full">Start free trial</a>
+      </div>
+
+      <!-- Growth (recommended) -->
+      <div class="plan plan-featured">
+        <div class="plan-badge">⭐ Most Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">
+          <span class="price-monthly">£69<span class="per">/mo</span></span>
+          <span class="price-annual" style="display:none">£57<span class="per">/mo</span></span>
+        </div>
+        <p class="plan-desc">Everything you need to grow. Unlimited AI conversations.</p>
+        <ul class="features">
+          <li>✅ Unlimited AI conversations</li>
+          <li>✅ SMS fallback</li>
+          <li>✅ Google Calendar sync</li>
+          <li>✅ No-show reminders</li>
+          <li>✅ Monday morning ROI report</li>
+          <li>✅ Daily 7pm summary</li>
+          <li>✅ 7-day free trial</li>
+          <li>❌ Review request automation</li>
+          <li>❌ Custom AI persona name</li>
+        </ul>
+        <a id="cta-growth" href="/api/auth/register?plan=growth" class="btn btn-primary btn-full">Start free trial</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="plan">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">
+          <span class="price-monthly">£119<span class="per">/mo</span></span>
+          <span class="price-annual" style="display:none">£99<span class="per">/mo</span></span>
+        </div>
+        <p class="plan-desc">For serious businesses. Every feature, dedicated number.</p>
+        <ul class="features">
+          <li>✅ Everything in Growth</li>
+          <li>✅ Google Review automation</li>
+          <li>✅ Custom AI persona name</li>
+          <li>✅ Dedicated Twilio number</li>
+          <li>✅ Monthly strategy call</li>
+          <li>✅ 7-day free trial</li>
+        </ul>
+        <a id="cta-pro" href="/api/auth/register?plan=pro" class="btn btn-outline btn-full">Start free trial</a>
+      </div>
+    </div>
+    <p class="pricing-note">💡 <strong>Annual plans save you 2 months.</strong> Lock in 12 months of growth and slash churn risk to zero.</p>
+  </div>
+</section>
+
+<!-- ─── WHO IT'S FOR ───────────────────────────────────────────────────────── -->
+<section class="who-for" id="who">
+  <div class="container">
+    <h2>Built for people who run their business from their phone</h2>
+    <div class="trades-scroll">
+      <div class="trade">🚗 Driving Instructors</div>
+      <div class="trade">💅 Mobile Beauticians</div>
+      <div class="trade">🏋️ Personal Trainers</div>
+      <div class="trade">🎨 Tattoo Artists</div>
+      <div class="trade">🐾 Dog Groomers</div>
+      <div class="trade">🎸 Music Tutors</div>
+      <div class="trade">🪟 Window Cleaners</div>
+      <div class="trade">📸 Photographers</div>
+      <div class="trade">✂️ Hairdressers</div>
+      <div class="trade">🏠 Cleaners</div>
+    </div>
+    <p class="who-sub">If you run a service business and hate missing calls — SnapReply is for you.</p>
+  </div>
+</section>
+
+<!-- ─── SOCIAL PROOF ──────────────────────────────────────────────────────── -->
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <h2>What our customers say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p>"I was missing 3-4 enquiries a week because I was in lessons. SnapReply caught them all. Paid for itself in the first week."</p>
+        <div class="testimonial-author">— Dave, Driving Instructor, Manchester</div>
+      </div>
+      <div class="testimonial">
+        <p>"Setup took me 4 minutes on my phone. Now I get a booking notification every time someone enquires. It feels like having a PA."</p>
+        <div class="testimonial-author">— Kemi, Mobile Beautician, London</div>
+      </div>
+      <div class="testimonial">
+        <p>"The Monday report showing me exactly how much revenue SnapReply recovered — that's what made me upgrade to Growth. No-brainer."</p>
+        <div class="testimonial-author">— James, Personal Trainer, Birmingham</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ───────────────────────────────────────────────────────────────── -->
+<section class="faq" id="faq">
+  <div class="container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Do I need a website or a laptop to use SnapReply?</summary>
+        <p>No. Everything runs through WhatsApp. You set up in 5 minutes by texting your SnapReply number. No dashboard, no browser, no laptop ever required.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does the AI actually say to my customers?</summary>
+        <p>It introduces itself as your assistant, finds out what service they need, collects their preferred date and time, and confirms a booking request — all in a warm, natural tone. You can customise the greeting. It never quotes prices or makes promises it can't keep.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What happens when the AI books something — does it go straight in my diary?</summary>
+        <p>You get a WhatsApp notification instantly with all the details. On Growth and Pro plans, it also creates a Google Calendar event automatically. You confirm with the customer directly.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I pause it if I'm on holiday?</summary>
+        <p>Yes. Just text PAUSE to your SnapReply number. Text UNPAUSE when you're back. Takes 2 seconds.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How does the 7-day free trial work?</summary>
+        <p>You get full access to your chosen plan for 7 days with no charge. Your card isn't billed until the trial ends. Cancel anytime by texting STOP — no questions asked.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is my customer's data safe?</summary>
+        <p>Yes. We're GDPR compliant, ICO registered, and conversations are automatically deleted after 90 days. We never sell your data or your customers' data. Full details in our <a href="/privacy">privacy policy</a>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if the AI says something wrong?</summary>
+        <p>SnapReply has built-in safety guardrails. If a reply looks like it could cause a problem (e.g. making a price promise), it holds the message and alerts you instead. You get a holding message sent to the customer automatically.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ──────────────────────────────────────────────────────────── -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Start catching every enquiry today.</h2>
+    <p>7-day free trial. No credit card needed. Cancel via WhatsApp.</p>
+    <div class="hero-ctas">
+      <a href="/api/auth/register?plan=starter" class="btn btn-secondary">Starter — £39/mo</a>
+      <a href="/api/auth/register?plan=growth" class="btn btn-primary">Growth — £69/mo ⭐</a>
+      <a href="/api/auth/register?plan=pro" class="btn btn-ghost">Pro — £119/mo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <p>📱 <strong>SnapReply</strong> — AI-powered WhatsApp assistant for UK micro-businesses</p>
+    <p class="footer-links">
+      <a href="/privacy">Privacy Policy</a> ·
+      <a href="/terms">Terms of Service</a> ·
+      <a href="mailto:hello@snapreply.co.uk">hello@snapreply.co.uk</a>
+    </p>
+    <p class="footer-legal">© 2025 SnapReply. Registered in England &amp; Wales. ICO registered. GDPR compliant.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/dashboard.js"></script>
+<script>
+function setBilling(mode) {
+  const isAnnual = mode === 'annual';
+  document.querySelectorAll('.price-monthly').forEach(el => el.style.display = isAnnual ? 'none' : '');
+  document.querySelectorAll('.price-annual').forEach(el => el.style.display = isAnnual ? '' : 'none');
+  document.getElementById('toggle-monthly').classList.toggle('active', !isAnnual);
+  document.getElementById('toggle-annual').classList.toggle('active', isAnnual);
+  const suffix = isAnnual ? '&annual=true' : '';
+  document.getElementById('cta-starter').href = `/api/auth/register?plan=starter${suffix}`;
+  document.getElementById('cta-growth').href = `/api/auth/register?plan=growth${suffix}`;
+  document.getElementById('cta-pro').href = `/api/auth/register?plan=pro${suffix}`;
+}
+</script>
+
+</body>
+</html>
