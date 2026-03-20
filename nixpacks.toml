@@ -1,8 +1,11 @@
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "gcc", "libffi", "openssl", "pkg-config", "postgresql"]
+nixPkgs = ["python311Full", "gcc", "libffi", "openssl", "pkg-config", "postgresql"]
 
 [phases.install]
-cmds = ["python3.11 -m pip install -r snapreply/requirements.txt"]
+cmds = [
+  "python3.11 -m ensurepip --upgrade",
+  "python3.11 -m pip install -r snapreply/requirements.txt"
+]
 
 [phases.build]
 cmds = []
