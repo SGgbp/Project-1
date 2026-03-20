@@ -52,11 +52,13 @@ async def receive_whatsapp_message(request: Request, background_tasks: Backgroun
     Return 200 IMMEDIATELY. All processing happens in BackgroundTasks.
     Meta will retry if it doesn't receive 200 within 20 seconds.
     """
+    raw_body = await request.body()
+
     if settings.PRODUCTION:
-        _verify_signature(request)
+        _verify_signature(request, raw_body)
 
     try:
-        body = await request.json()
+        body = json.loads(raw_body)
     except Exception:
         return Response(status_code=200)
 
@@ -64,12 +66,19 @@ async def receive_whatsapp_message(request: Request, background_tasks: Backgroun
     return Response(status_code=200)
 
 
-def _verify_signature(request: Request):
-    """Validate X-Hub-Signature-256 header in production."""
-    signature = request.headers.get("X-Hub-Signature-256", "")
-    if not signature.startswith("sha256="):
+def _verify_signature(request: Request, raw_body: bytes) -> None:
+    """Validate X-Hub-Signature-256 HMAC header in production."""
+    signature_header = request.headers.get("X-Hub-Signature-256", "")
+    if not signature_header.startswith("sha256="):
         raise HTTPException(status_code=403, detail="Missing signature")
-    # Note: body bytes need to be read before calling this; handled in middleware
+    received_sig = signature_header[7:]
+    expected_sig = hmac.new(
+        settings.WHATSAPP_APP_SECRET.encode(),
+        raw_body,
+        hashlib.sha256,
+    ).hexdigest()
+    if not hmac.compare_digest(received_sig, expected_sig):
+        raise HTTPException(status_code=403, detail="Invalid signature")
 
 
 # ─── Background processing ───────────────────────────────────────────────────

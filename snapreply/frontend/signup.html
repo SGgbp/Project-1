@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start Free Trial — SnapReply</title>
+  <meta name="description" content="Start your 7-day free trial. No credit card required.">
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+    .auth-page { min-height: 100vh; background: var(--off-white); display: flex; flex-direction: column; }
+    .auth-header { background: linear-gradient(135deg, var(--navy), #0F3460); padding: 1.25rem 1.5rem; }
+    .auth-header a { color: var(--white); font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    .auth-container { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem 4rem; }
+    .auth-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.5rem; width: 100%; max-width: 520px; }
+    .auth-card h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .auth-card .subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+    .plan-pills { display: flex; gap: 0.5rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .plan-pill { flex: 1; min-width: 100px; padding: 0.75rem 0.5rem; border: 2px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .plan-pill.selected { border-color: var(--green); background: rgba(37,211,102,0.06); }
+    .plan-pill .pill-name { font-weight: 700; font-size: 0.9rem; }
+    .plan-pill .pill-price { font-size: 0.8rem; color: var(--text-muted); }
+    .plan-pill.selected .pill-name { color: var(--green-dark); }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.375rem; color: var(--text); }
+    input, select { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s; background: var(--white); }
+    input:focus, select:focus { outline: none; border-color: var(--green); }
+    .help-text { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .submit-btn { width: 100%; padding: 1rem; background: var(--green); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+    .submit-btn:hover { background: var(--green-dark); }
+    .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .trust-note { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem; }
+    .auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted); }
+    .auth-switch a { color: var(--green-dark); font-weight: 600; }
+    .error-box { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 0.875rem 1rem; color: #DC2626; font-size: 0.875rem; margin-bottom: 1.25rem; display: none; }
+    @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="auth-page">
+
+<header class="auth-header">
+  <a href="/">📱 SnapReply</a>
+</header>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Start your free trial</h1>
+    <p class="subtitle">7 days free. No credit card needed. Cancel via WhatsApp anytime.</p>
+
+    <!-- Plan selector -->
+    <div class="plan-pills">
+      <div class="plan-pill" data-plan="starter" onclick="selectPlan('starter')">
+        <div class="pill-name">Starter</div>
+        <div class="pill-price">£39/mo</div>
+      </div>
+      <div class="plan-pill selected" data-plan="growth" onclick="selectPlan('growth')">
+        <div class="pill-name">Growth ⭐</div>
+        <div class="pill-price">£69/mo</div>
+      </div>
+      <div class="plan-pill" data-plan="pro" onclick="selectPlan('pro')">
+        <div class="pill-name">Pro</div>
+        <div class="pill-price">£119/mo</div>
+      </div>
+    </div>
+
+    <div class="error-box" id="error-box"></div>
+
+    <form id="signup-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="owner_name">Your name</label>
+          <input type="text" id="owner_name" name="owner_name" placeholder="Jane Smith" required />
+        </div>
+        <div class="form-group">
+          <label for="business_name">Business name</label>
+          <input type="text" id="business_name" name="business_name" placeholder="Jane's Hair Studio" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="business_type">Business type</label>
+          <select id="business_type" name="business_type" required>
+            <option value="">Select type...</option>
+            <option value="driving_instructor">Driving Instructor</option>
+            <option value="beautician">Beautician / Nails</option>
+            <option value="personal_trainer">Personal Trainer</option>
+            <option value="tattoo_artist">Tattoo Artist</option>
+            <option value="dog_groomer">Dog Groomer</option>
+            <option value="tutor">Tutor / Music Teacher</option>
+            <option value="cleaner">Cleaner</option>
+            <option value="photographer">Photographer</option>
+            <option value="hairdresser">Hairdresser</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="city">City / Town</label>
+          <input type="text" id="city" name="city" placeholder="Manchester" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="owner_whatsapp">Your WhatsApp number</label>
+        <input type="tel" id="owner_whatsapp" name="owner_whatsapp" placeholder="+447911123456" required />
+        <p class="help-text">We'll send booking alerts and your daily summary here.</p>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="8+ characters" required minlength="8" />
+        </div>
+        <div class="form-group">
+          <label for="confirm_password">Confirm password</label>
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat password" required />
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Start free trial →</button>
+      <p class="trust-note">✅ 7-day free trial &nbsp;·&nbsp; No credit card required &nbsp;·&nbsp; Cancel anytime</p>
+    </form>
+
+    <div class="auth-switch">Already have an account? <a href="/login">Sign in</a></div>
+  </div>
+</div>
+
+<script>
+  let selectedPlan = 'growth';
+
+  // Pre-select plan from URL param
+  const urlPlan = new URLSearchParams(window.location.search).get('plan');
+  if (urlPlan && ['starter','growth','pro'].includes(urlPlan)) selectPlan(urlPlan);
+
+  function selectPlan(plan) {
+    selectedPlan = plan;
+    document.querySelectorAll('.plan-pill').forEach(p => {
+      p.classList.toggle('selected', p.dataset.plan === plan);
+    });
+  }
+
+  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const errBox = document.getElementById('error-box');
+    errBox.style.display = 'none';
+
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm_password').value;
+    if (password !== confirm) {
+      showError('Passwords do not match.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Creating account...';
+
+    const payload = {
+      email: document.getElementById('email').value.trim(),
+      password,
+      owner_name: document.getElementById('owner_name').value.trim(),
+      business_name: document.getElementById('business_name').value.trim(),
+      business_type: document.getElementById('business_type').value,
+      owner_whatsapp: document.getElementById('owner_whatsapp').value.trim(),
+      city: document.getElementById('city').value.trim(),
+      plan: selectedPlan,
+    };
+
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        showError(data.detail || 'Registration failed. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Start free trial →';
+        return;
+      }
+
+      // Store business_id for post-checkout
+      localStorage.setItem('snapreply_business_id', data.business_id);
+
+      if (data.checkout_url) {
+        btn.textContent = 'Redirecting to payment...';
+        window.location.href = data.checkout_url;
+      } else {
+        window.location.href = '/dashboard';
+      }
+    } catch (err) {
+      showError('Network error. Please check your connection and try again.');
+      btn.disabled = false;
+      btn.textContent = 'Start free trial →';
+    }
+  });
+
+  function showError(msg) {
+    const box = document.getElementById('error-box');
+    box.textContent = msg;
+    box.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>

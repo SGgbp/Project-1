@@ -18,6 +18,7 @@ def start_scheduler() -> None:
     from workers.noshow_reminder import send_noshow_reminders
     from workers.trial_expiry import run_trial_expiry_checks
     from workers.health_check import check_platform_health
+    from workers.gdpr_cleanup import run_gdpr_cleanup
     from services.review_service import process_review_queue
 
     # Daily digest — 7pm UK time, every day
@@ -80,8 +81,18 @@ def start_scheduler() -> None:
         coalesce=True,
     )
 
+    # GDPR cleanup — 3am UK time, every day
+    scheduler.add_job(
+        run_gdpr_cleanup,
+        CronTrigger(hour=3, minute=0, timezone="Europe/London"),
+        id="gdpr_cleanup",
+        name="GDPR Data Cleanup",
+        misfire_grace_time=3600,
+        coalesce=True,
+    )
+
     scheduler.start()
-    logger.info("Scheduler started with 6 jobs registered.")
+    logger.info("Scheduler started with 7 jobs registered.")
 
 
 def stop_scheduler() -> None:

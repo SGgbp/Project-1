@@ -76,12 +76,14 @@ from api.routes.dashboard import router as dashboard_router
 from api.routes.onboarding import router as onboarding_router
 from api.routes.admin import router as admin_router
 from api.routes.calendar import router as calendar_router
+from api.routes.settings import router as settings_router
 
 app.include_router(auth_router)
 app.include_router(dashboard_router)
 app.include_router(onboarding_router)
 app.include_router(admin_router)
 app.include_router(calendar_router)
+app.include_router(settings_router)
 
 # ─── Health endpoint ─────────────────────────────────────────────────────────
 @app.get("/health")

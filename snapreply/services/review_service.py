@@ -1,25 +1,28 @@
 """
 Automated Google Review requests — Pro tier only.
 Sends a WhatsApp to the customer 2 hours after a booking is marked complete.
+Uses DB-backed queue so jobs survive restarts.
 """
 import logging
 from datetime import datetime, timedelta, timezone
-from typing import List
 
 logger = logging.getLogger(__name__)
 
-# In-process queue: list of {booking_id, scheduled_time}
-_review_queue: List[dict] = []
-
 
 def schedule_review_request(booking_id: str) -> None:
-    """Add a booking to the review request queue, scheduled for 2 hours from now."""
-    scheduled_time = datetime.now(timezone.utc) + timedelta(hours=2)
-    _review_queue.append({
-        "booking_id": booking_id,
-        "scheduled_time": scheduled_time,
-    })
-    logger.info(f"Review request scheduled for booking {booking_id[-8:]} at {scheduled_time.isoformat()}")
+    """Add a booking to the DB-backed review request queue (2 hours from now)."""
+    import asyncio
+    asyncio.create_task(_persist_review_request(booking_id))
+
+
+async def _persist_review_request(booking_id: str) -> None:
+    from database.connection import AsyncSessionLocal
+    from database.models import ReviewQueue
+    scheduled_at = datetime.now(timezone.utc) + timedelta(hours=2)
+    async with AsyncSessionLocal() as db:
+        db.add(ReviewQueue(booking_id=booking_id, scheduled_at=scheduled_at))
+        await db.commit()
+    logger.info(f"Review request queued for booking {str(booking_id)[-8:]} at {scheduled_at.isoformat()}")
 
 
 async def process_review_queue() -> None:
@@ -27,13 +30,28 @@ async def process_review_queue() -> None:
     Called by APScheduler every 15 minutes.
     Sends pending review requests that are due.
     """
-    now = datetime.now(timezone.utc)
-    pending = [item for item in _review_queue if item["scheduled_time"] <= now]
+    from database.connection import AsyncSessionLocal
+    from database.models import ReviewQueue
+    from sqlalchemy import select
 
-    for item in pending:
-        success = await send_review_request(item["booking_id"])
-        if success or True:  # Remove from queue regardless (avoid infinite retry spam)
-            _review_queue.remove(item)
+    now = datetime.now(timezone.utc)
+
+    async with AsyncSessionLocal() as db:
+        result = await db.execute(
+            select(ReviewQueue).where(
+                ReviewQueue.scheduled_at <= now,
+                ReviewQueue.sent == False,
+            )
+        )
+        items = result.scalars().all()
+
+        for item in items:
+            await send_review_request(str(item.booking_id))
+            item.sent = True
+
+        if items:
+            await db.commit()
+            logger.info(f"Processed {len(items)} review request(s)")
 
 
 async def send_review_request(booking_id: str) -> bool:
@@ -54,7 +72,7 @@ async def send_review_request(booking_id: str) -> bool:
             return False
 
         if booking.status != "completed":
-            logger.info(f"Review: booking {booking_id[-8:]} not completed — skipping")
+            logger.info(f"Review: booking {str(booking_id)[-8:]} not completed — skipping")
             return False
 
         biz_result = await db.execute(select(Business).where(Business.id == booking.business_id))
@@ -62,7 +80,6 @@ async def send_review_request(booking_id: str) -> bool:
         if not business or not business.is_pro:
             return False
 
-        # Build review URL
         if business.google_place_id:
             review_url = f"https://maps.google.com/?cid={business.google_place_id}"
         else:
@@ -81,7 +98,6 @@ async def send_review_request(booking_id: str) -> bool:
         from services.whatsapp_service import send_whatsapp_message
         success = await send_whatsapp_message(booking.customer_phone, msg)
 
-        # Log it
         log = OwnerCommand(
             business_id=business.id,
             command="REVIEW_REQUEST",
@@ -91,5 +107,5 @@ async def send_review_request(booking_id: str) -> bool:
         await db.commit()
 
         if success:
-            logger.info(f"Review request sent for booking {booking_id[-8:]}")
+            logger.info(f"Review request sent for booking {str(booking_id)[-8:]}")
         return success
